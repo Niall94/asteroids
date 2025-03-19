@@ -1,6 +1,6 @@
 from constants import *
 import pygame
-from player import *
+from player import Player
 
 
 def main():
@@ -11,7 +11,12 @@ def main():
     # set the clock variable to the clock object
     clock = pygame.time.Clock()
     dt = 0
-    pl = player(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2)
+   
+    updateable = pygame.sprite.Group()
+    drawable = pygame.sprite.Group()
+
+    Player.containers = (updateable, drawable)
+    player = Player(SCREEN_WIDTH / 2,  SCREEN_HEIGHT / 2)
 
     # setup the game loop
     while True:
@@ -19,11 +24,18 @@ def main():
             if event.type == pygame.QUIT:
                 return
        
+        updateable.update(dt)
+
        # creates a black background for the screen
         screen.fill(000)
+        
         # Draw the player here
-        pl.draw(screen)
+        for obj in drawable:
+            obj.draw(screen)
+            
+
         pygame.display.flip()
+
         # set the framerate to 60fps
         dt = clock.tick(60) / 1000
         
