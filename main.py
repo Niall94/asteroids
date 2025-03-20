@@ -47,6 +47,11 @@ def main():
                 print("Game over!")
                 sys.exit()
 
+            for shot in shots:
+                if obj.is_colliding(shot):
+                    shot.kill()
+                    obj.split()
+        
 
        # creates a black background for the screen
         screen.fill(000)
